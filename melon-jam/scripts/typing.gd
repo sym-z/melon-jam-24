@@ -23,6 +23,9 @@ var currentSpawnIndex = SPAWN.WEST
 
 var wordsPerGrow : int = 3
 var wordNum : int = 0
+
+
+
 func _ready() -> void:
 	WordBank.loadFromFile(WordBank.textFile)
 	currentSpawn = westSpawnZone
@@ -78,20 +81,34 @@ func getRandomWord() -> String:
 	# Choose a random word from that list
 	var index = randi_range(0,wordSet.size()-1)
 	return wordSet[index]
+func removeMass():
+	massParent.remove_child(massParent.get_child(0))
+	# TODO TEST WORKAROUND TO CALLBACK
+	if currentLetter >= currentWord.length():
+		newWord()
+		for mass in massParent.get_children():
+			mass.sprite.frame = currLevel - 1
 
 func _input(event: InputEvent) -> void:
+	
 	if event is InputEventKey and event.is_released():
 			if String.chr(event.keycode) == currentWord[currentLetter]:
 				print("CORRECT")
+				currentLetter+=1
 				if currentLetter < currentWord.length() - 1:
-					currentLetter+=1
-					massParent.remove_child(massParent.get_child(0))
+					
+					#massParent.remove_child(massParent.get_child(0))
+					var tween = get_tree().create_tween()
+					tween.tween_property(massParent.get_child(0).sprite,"global_position",player.global_position,1)
+					tween.tween_callback(removeMass)
 				else:
 					print("DONE!!")
-					massParent.remove_child(massParent.get_child(0))
-					newWord()
-					for mass in massParent.get_children():
-						mass.sprite.frame = currLevel - 1
+					if(massParent.get_child_count()):
+						var tween = get_tree().create_tween()
+						tween.tween_property(massParent.get_child(0).sprite,"global_position",player.global_position,1)
+						tween.tween_callback(removeMass)
+
+
 			else:
 				print("FALSE")
 			
