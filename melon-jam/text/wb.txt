@@ -1,4 +1,7 @@
-﻿Planet
+﻿a
+io
+sun
+Planet
 Attract
 Repel
 Retract

@@ -1,13 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=8 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
 [ext_resource type="Texture2D" uid="uid://cjq0xo3lvoaoy" path="res://sprites/player.png" id="2_dlvbi"]
 [ext_resource type="Texture2D" uid="uid://bcwpaye4dm5xk" path="res://sprites/letter.png" id="3_gg5f7"]
 
-[node name="Typing" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yfhig"]
+size = Vector2(12, 34.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mopq7"]
+size = Vector2(29, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u46e7"]
+size = Vector2(11.5, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ea6j"]
+size = Vector2(14.875, 11.625)
+
+[node name="Typing" type="Node2D" node_paths=PackedStringArray("massParent", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone")]
 script = ExtResource("1_7fg4x")
+massParent = NodePath("Mass Parent")
+westSpawnZone = NodePath("West/West Spawn Zone")
+northSpawnZone = NodePath("North/North Spawn Zone")
+eastSpawnZone = NodePath("East/East Spawn Zone")
+southSpawnZone = NodePath("South/South Spawn Zone")
 
 [node name="Temp Sprites" type="Node2D" parent="."]
+visible = false
 
 [node name="Player" type="Sprite2D" parent="Temp Sprites"]
 position = Vector2(131, 123)
@@ -16,3 +34,29 @@ texture = ExtResource("2_dlvbi")
 [node name="Letter" type="Sprite2D" parent="Temp Sprites"]
 position = Vector2(205, 60)
 texture = ExtResource("3_gg5f7")
+
+[node name="Mass Parent" type="Node2D" parent="."]
+
+[node name="West" type="Area2D" parent="."]
+
+[node name="West Spawn Zone" type="CollisionShape2D" parent="West"]
+position = Vector2(48, 110)
+shape = SubResource("RectangleShape2D_yfhig")
+
+[node name="North" type="Area2D" parent="."]
+
+[node name="North Spawn Zone" type="CollisionShape2D" parent="North"]
+position = Vector2(117, 28)
+shape = SubResource("RectangleShape2D_mopq7")
+
+[node name="East" type="Area2D" parent="."]
+
+[node name="East Spawn Zone" type="CollisionShape2D" parent="East"]
+position = Vector2(190, 111)
+shape = SubResource("RectangleShape2D_u46e7")
+
+[node name="South" type="Area2D" parent="."]
+
+[node name="South Spawn Zone" type="CollisionShape2D" parent="South"]
+position = Vector2(126, 176)
+shape = SubResource("RectangleShape2D_8ea6j")
