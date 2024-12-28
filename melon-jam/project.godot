@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 WordBank="*res://scripts/word_bank.gd"
-Typer="*res://scripts/input.gd"
 
 [display]
 

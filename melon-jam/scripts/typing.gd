@@ -9,27 +9,26 @@ extends Node2D
 @export var eastSpawnZone : CollisionShape2D
 @export var southSpawnZone : CollisionShape2D
 
-
-
 var massScene = preload("res://scenes/mass.tscn")
 var playerScene = preload("res://scenes/player.tscn")
 
 var currentLetter = 0
-var word = ""
+var currentWord = ""
 enum SPAWN{WEST,NORTH,EAST,SOUTH}
 var currentSpawn : CollisionShape2D
 var currentSpawnIndex = SPAWN.WEST
+
 func _ready() -> void:
 	WordBank.loadFromFile(WordBank.textFile)
-	word = getRandomWord()
 	currentSpawn = westSpawnZone
-	makeMassesFromWord(word)
-	print(word)
-	
-func _process(delta: float) -> void:
-	pass
+	newWord()
 
-func makeMassesFromWord(word :String):	
+func newWord():
+	currentLetter = 0
+	currentWord = getRandomWord()
+	makeMassesFromWord(currentWord)
+	print(currentWord)
+func makeMassesFromWord(word :String):
 	for letter in word:
 		var box = currentSpawn.shape.get_rect()
 		var startBox : Vector2 = currentSpawn.global_position
@@ -39,7 +38,6 @@ func makeMassesFromWord(word :String):
 		var inst = massScene.instantiate();
 		inst.startLoc = Vector2(xVal,yVal)
 		massParent.add_child(inst)
-		print(currentSpawnIndex)
 		getNextSpawn()
 
 func getNextSpawn():
@@ -58,21 +56,25 @@ func getNextSpawn():
 			currentSpawnIndex = SPAWN.WEST
 			
 func getRandomWord() -> String:
+	# Get random word length
 	var length = randi_range(1, WordBank.LEVELS)
+	# Grab list of words of that length
 	var wordSet = WordBank.bank[length]
+	# Choose a random word from that list
 	var index = randi_range(0,wordSet.size()-1)
 	return wordSet[index]
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_released():
-			if String.chr(event.keycode) == word[currentLetter]:
+			if String.chr(event.keycode) == currentWord[currentLetter]:
 				print("CORRECT")
-				if currentLetter < word.length() - 1:
+				if currentLetter < currentWord.length() - 1:
 					currentLetter+=1
 					massParent.remove_child(massParent.get_child(0))
 				else:
 					print("DONE!!")
 					massParent.remove_child(massParent.get_child(0))
+					newWord()
 			else:
 				print("FALSE")
 			

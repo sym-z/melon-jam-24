@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://b45b1fvtil08l"]
 
 [ext_resource type="Script" path="res://scripts/mass.gd" id="1_35tdq"]
-[ext_resource type="Texture2D" uid="uid://bcwpaye4dm5xk" path="res://sprites/letter.png" id="2_20rdk"]
+[ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="2_vbvr8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i6hfm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_20rdk")
+"texture": ExtResource("2_vbvr8")
 }],
 "loop": true,
 "name": &"default",
@@ -18,5 +18,5 @@ animations = [{
 script = ExtResource("1_35tdq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_i6hfm")
+centered = false

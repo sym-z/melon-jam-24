@@ -2,7 +2,7 @@ extends Node
 
 @onready var textFile = 'res://text/wb.txt'
 @onready var bank = {}
-@onready var LEVELS = 11;
+@onready var LEVELS = 12
 
 func _ready() -> void:
 	buildBank()
@@ -11,16 +11,16 @@ func _ready() -> void:
 func buildBank():
 	for num in range(1,LEVELS+1):
 		bank[num] = []
-
+	
 func loadFromFile(text):
 	var file = FileAccess.open(text, FileAccess.READ)
 	var content = file.get_as_text()
-	var arr = content.split("\r", false)
+	var arr = content.split("\n", false)
 	parseWordArr(arr)
 
 func parseWordArr(arr):
 	for word in arr:
-		word = word.lstrip("\n")
+		word = word.c_unescape()
 		if word.length():
 			if word.length() > LEVELS:
 				bank[LEVELS].append(word.to_upper())
