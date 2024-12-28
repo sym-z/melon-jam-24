@@ -97,7 +97,7 @@ func removeMass():
 			mass.sprite.frame = currLevel - 1
 
 var tween : Tween
-var tweenDur : float = 0.2
+var tweenDur : float = 0.15
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_released():
 			# Prevent keyboard mashing
