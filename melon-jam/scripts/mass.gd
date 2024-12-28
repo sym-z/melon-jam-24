@@ -1,5 +1,6 @@
 extends Node2D
 
+@export var sprite : AnimatedSprite2D
 ## Where the letter is displayed, determined at runtime
 var startLoc : Vector2
 
