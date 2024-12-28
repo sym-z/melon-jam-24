@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://do4ad7d6xmg37"]
+[gd_scene load_steps=11 format=3 uid="uid://do4ad7d6xmg37"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_r5oyr"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="1_thhjq"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dwmqawwhmpeeq" path="res://sprites/pluto.png" id="5_hwauj"]
 [ext_resource type="Texture2D" uid="uid://vvo4f48xjpnq" path="res://sprites/mercury.png" id="6_euky4"]
 [ext_resource type="Texture2D" uid="uid://cuf8yjaipa7pv" path="res://sprites/mars.png" id="7_wj7y4"]
+[ext_resource type="Texture2D" uid="uid://clhd8qrow2py7" path="res://sprites/venus.png" id="8_ucxr8"]
+[ext_resource type="Texture2D" uid="uid://curwqoyyp2mlo" path="res://sprites/earth.png" id="9_qsx56"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aqjtg"]
 animations = [{
@@ -28,6 +30,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("7_wj7y4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ucxr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_qsx56")
 }],
 "loop": false,
 "name": &"default",
