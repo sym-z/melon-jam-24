@@ -1,19 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://do4ad7d6xmg37"]
+[gd_scene load_steps=9 format=3 uid="uid://do4ad7d6xmg37"]
 
-[ext_resource type="Texture2D" uid="uid://cjq0xo3lvoaoy" path="res://sprites/player.png" id="1_rtr8f"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_r5oyr"]
+[ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="1_thhjq"]
+[ext_resource type="Texture2D" uid="uid://imeme21oiue5" path="res://sprites/asteroid.png" id="2_lipo3"]
+[ext_resource type="Texture2D" uid="uid://brew2swdmbtc0" path="res://sprites/moon.png" id="3_jx7ux"]
+[ext_resource type="Texture2D" uid="uid://dwmqawwhmpeeq" path="res://sprites/pluto.png" id="5_hwauj"]
+[ext_resource type="Texture2D" uid="uid://vvo4f48xjpnq" path="res://sprites/mercury.png" id="6_euky4"]
+[ext_resource type="Texture2D" uid="uid://cuf8yjaipa7pv" path="res://sprites/mars.png" id="7_wj7y4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aqjtg"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_rtr8f")
+"texture": ExtResource("1_thhjq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lipo3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jx7ux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hwauj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_euky4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wj7y4")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_r5oyr")
+sprite = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_aqjtg")
+frame = 1

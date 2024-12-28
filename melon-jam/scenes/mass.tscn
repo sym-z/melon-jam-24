@@ -1,21 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://b45b1fvtil08l"]
+[gd_scene load_steps=9 format=3 uid="uid://b45b1fvtil08l"]
 
 [ext_resource type="Script" path="res://scripts/mass.gd" id="1_35tdq"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="2_vbvr8"]
+[ext_resource type="Texture2D" uid="uid://imeme21oiue5" path="res://sprites/asteroid.png" id="3_2q6vh"]
+[ext_resource type="Texture2D" uid="uid://brew2swdmbtc0" path="res://sprites/moon.png" id="4_38aa7"]
+[ext_resource type="Texture2D" uid="uid://dwmqawwhmpeeq" path="res://sprites/pluto.png" id="5_rindv"]
+[ext_resource type="Texture2D" uid="uid://vvo4f48xjpnq" path="res://sprites/mercury.png" id="6_jtapb"]
+[ext_resource type="Texture2D" uid="uid://cuf8yjaipa7pv" path="res://sprites/mars.png" id="7_pnpt6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i6hfm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_vbvr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2q6vh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_38aa7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_rindv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_jtapb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pnpt6")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
-"speed": 5.0
+"speed": 1.0
 }]
 
-[node name="Mass" type="Node2D"]
+[node name="Mass" type="Node2D" node_paths=PackedStringArray("sprite")]
 script = ExtResource("1_35tdq")
+sprite = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_i6hfm")
