@@ -26,4 +26,6 @@ func parseWordArr(arr):
 				bank[LEVELS].append(word.to_upper())
 			else:
 				bank[word.length()].append(word.to_upper())
-	#print(bank)
+
+func printWordBank():
+	print(bank)

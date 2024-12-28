@@ -46,6 +46,7 @@ centered = false
 [node name="Mass Parent" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("4_mwn3l")]
+z_index = 10
 position = Vector2(128, 120)
 
 [node name="West" type="Area2D" parent="."]
