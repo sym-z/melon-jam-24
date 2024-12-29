@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_2brmx"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_l5uq4"]
-[ext_resource type="Texture2D" uid="uid://d2iqj3jd6e4ao" path="res://sprites/temp-bg.png" id="2_84y2p"]
+[ext_resource type="Texture2D" uid="uid://dgrycmyvihbbf" path="res://sprites/background.png" id="3_0e6sn"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="3_km81b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_62mty"]
@@ -28,7 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_84y2p")
+texture = ExtResource("3_0e6sn")
 
 [node name="Play Button" type="Button" parent="."]
 use_parent_material = true

@@ -5,11 +5,8 @@ void vertex() {
 
 void fragment() {
 	float scanLineStrength = 0.85;
-	float bandingStrength = 0.01;
-	float lineThickness = 1.2;
-	float opacity = 1.2;
-	
-	float wave = cos(FRAGCOORD.y * lineThickness + TIME)*opacity;
+	float bandingStrength = 0.012;
+	float wave = cos(FRAGCOORD.y + TIME);
 	// Static Scanline
 	if(int(FRAGCOORD.y) % 2 == 0)
 	{
