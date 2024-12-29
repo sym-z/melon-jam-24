@@ -10,8 +10,5 @@ func changeRadius(currLevel : int):
 
 
 func _on_area_2d_area_entered(area):
-	print("I SEE U")
 	if area.get_parent().has_method("hideSprite"):
-		print("HIDE ME")
 		area.get_parent().hideSprite()
-	pass # Replace with function body.

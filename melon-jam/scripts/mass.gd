@@ -12,7 +12,6 @@ func _ready() -> void:
 	adjustOffset()
 
 func hideSprite():
-	print("hiding")
 	sprite.visible = false
 
 
