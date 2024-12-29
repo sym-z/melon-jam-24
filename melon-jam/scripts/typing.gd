@@ -12,6 +12,9 @@ extends Node2D
 @export var eastSpawnZone : CollisionShape2D
 @export var southSpawnZone : CollisionShape2D
 
+## Text shown to player
+@export var wordLabel : RichTextLabel
+
 ## For instantiating and referencing
 var massScene = preload("res://scenes/mass.tscn")
 var playerScene = preload("res://scenes/player.tscn")
@@ -58,7 +61,7 @@ func newWord():
 	currentLetter = 0
 	currentWord = getRandomWord()
 	makeMassesFromWord(currentWord)
-	
+	wordLabel.text = "[center]"+currentWord.to_lower()+"[/center]"
 	# Transform if the player has made enough words
 	if wordNum > wordsPerGrow:
 		wordNum=1
@@ -97,6 +100,9 @@ func getNextSpawn():
 func getRandomWord() -> String:
 	# Get random word length
 	var length = randi_range(1, WordBank.LEVELS)
+	# Prevent overflow
+	if currLevel > WordBank.LEVELS:
+		currLevel = WordBank.LEVELS
 	# Grab list of words of that length
 	var wordSet = WordBank.bank[currLevel]
 	# Choose a random word from that list
@@ -123,6 +129,7 @@ func _input(event: InputEvent) -> void:
 			if currentLetter < currentWord.length() and String.chr(event.keycode) == currentWord[currentLetter]:
 				print("CORRECT")
 				currentLetter+=1
+				wordLabel.text = "[center]"+currentWord.to_lower().erase(0,currentLetter)+"[/center]"
 				if currentLetter < currentWord.length():
 					## TODO: COOL ANIMATION TO SHOW LETTER WAS CORRECT
 					pass
@@ -132,6 +139,7 @@ func _input(event: InputEvent) -> void:
 						tween = create_tween().set_trans(Tween.TRANS_QUAD)
 						var childArr = massParent.get_children()
 						for i in range(childArr.size()):
+							# Make sure the center of the sprite is homing toward the center of the player
 							var xDelta = childArr[i].sprite.sprite_frames.get_frame_texture(childArr[i].sprite.animation,childArr[i].sprite.frame).get_width() / 2
 							var yDelta = childArr[i].sprite.sprite_frames.get_frame_texture(childArr[i].sprite.animation,childArr[i].sprite.frame).get_height() / 2
 							var deltaVector : Vector2 = Vector2(xDelta,yDelta)
