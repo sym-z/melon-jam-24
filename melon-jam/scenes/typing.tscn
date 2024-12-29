@@ -1,10 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=12 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
-[ext_resource type="Texture2D" uid="uid://cjq0xo3lvoaoy" path="res://sprites/player.png" id="2_dlvbi"]
 [ext_resource type="Texture2D" uid="uid://dgrycmyvihbbf" path="res://sprites/background.png" id="3_bwbys"]
-[ext_resource type="Texture2D" uid="uid://bcwpaye4dm5xk" path="res://sprites/letter.png" id="3_gg5f7"]
-[ext_resource type="Texture2D" uid="uid://d2iqj3jd6e4ao" path="res://sprites/temp-bg.png" id="4_45qje"]
 [ext_resource type="PackedScene" uid="uid://do4ad7d6xmg37" path="res://scenes/player.tscn" id="4_mwn3l"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="6_f1k2r"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="7_cp658"]
@@ -17,7 +14,7 @@ shader = ExtResource("6_f1k2r")
 size = Vector2(64, 135)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mopq7"]
-size = Vector2(138, 12)
+size = Vector2(64, 57)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u46e7"]
 size = Vector2(61, 125)
@@ -30,11 +27,11 @@ material = SubResource("ShaderMaterial_at7qc")
 use_parent_material = true
 script = ExtResource("1_7fg4x")
 player = NodePath("Player")
-massParent = NodePath("Mass Parent")
-westSpawnZone = NodePath("West/West Spawn Zone")
-northSpawnZone = NodePath("North/North Spawn Zone")
-eastSpawnZone = NodePath("East/East Spawn Zone")
-southSpawnZone = NodePath("South/South Spawn Zone")
+massParent = NodePath("Masses/Mass Parent")
+westSpawnZone = NodePath("Masses/Mass Spawn Zones/West/West Spawn Zone")
+northSpawnZone = NodePath("Masses/Mass Spawn Zones/North/North Spawn Zone")
+eastSpawnZone = NodePath("Masses/Mass Spawn Zones/East/East Spawn Zone")
+southSpawnZone = NodePath("Masses/Mass Spawn Zones/South/South Spawn Zone")
 wordLabel = NodePath("UI/HBoxContainer/RichTextLabel")
 tweenDur = 0.3
 
@@ -43,65 +40,48 @@ use_parent_material = true
 texture = ExtResource("3_bwbys")
 centered = false
 
-[node name="Temp Sprites" type="Node2D" parent="."]
-visible = false
+[node name="Masses" type="Node2D" parent="."]
+
+[node name="Mass Parent" type="Node2D" parent="Masses"]
 use_parent_material = true
 
-[node name="Player" type="Sprite2D" parent="Temp Sprites"]
-visible = false
-use_parent_material = true
-position = Vector2(131, 123)
-texture = ExtResource("2_dlvbi")
+[node name="Mass Spawn Zones" type="Node2D" parent="Masses"]
 
-[node name="Letter" type="Sprite2D" parent="Temp Sprites"]
-visible = false
-use_parent_material = true
-position = Vector2(205, 60)
-texture = ExtResource("3_gg5f7")
-
-[node name="Background" type="Sprite2D" parent="Temp Sprites"]
-use_parent_material = true
-texture = ExtResource("4_45qje")
-centered = false
-
-[node name="Mass Parent" type="Node2D" parent="."]
+[node name="West" type="Area2D" parent="Masses/Mass Spawn Zones"]
 use_parent_material = true
 
-[node name="Player" parent="." instance=ExtResource("4_mwn3l")]
-use_parent_material = true
-position = Vector2(128, 120)
-
-[node name="West" type="Area2D" parent="."]
-use_parent_material = true
-
-[node name="West Spawn Zone" type="CollisionShape2D" parent="West"]
+[node name="West Spawn Zone" type="CollisionShape2D" parent="Masses/Mass Spawn Zones/West"]
 use_parent_material = true
 position = Vector2(40, 117.5)
 shape = SubResource("RectangleShape2D_yfhig")
 
-[node name="North" type="Area2D" parent="."]
+[node name="North" type="Area2D" parent="Masses/Mass Spawn Zones"]
 use_parent_material = true
 
-[node name="North Spawn Zone" type="CollisionShape2D" parent="North"]
+[node name="North Spawn Zone" type="CollisionShape2D" parent="Masses/Mass Spawn Zones/North"]
 use_parent_material = true
-position = Vector2(77, 44)
+position = Vector2(40, 66.5)
 shape = SubResource("RectangleShape2D_mopq7")
 
-[node name="East" type="Area2D" parent="."]
+[node name="East" type="Area2D" parent="Masses/Mass Spawn Zones"]
 use_parent_material = true
 
-[node name="East Spawn Zone" type="CollisionShape2D" parent="East"]
+[node name="East Spawn Zone" type="CollisionShape2D" parent="Masses/Mass Spawn Zones/East"]
 use_parent_material = true
 position = Vector2(195.5, 122.5)
 shape = SubResource("RectangleShape2D_u46e7")
 
-[node name="South" type="Area2D" parent="."]
+[node name="South" type="Area2D" parent="Masses/Mass Spawn Zones"]
 use_parent_material = true
 
-[node name="South Spawn Zone" type="CollisionShape2D" parent="South"]
+[node name="South Spawn Zone" type="CollisionShape2D" parent="Masses/Mass Spawn Zones/South"]
 use_parent_material = true
 position = Vector2(117, 182)
 shape = SubResource("RectangleShape2D_8ea6j")
+
+[node name="Player" parent="." instance=ExtResource("4_mwn3l")]
+use_parent_material = true
+position = Vector2(128, 120)
 
 [node name="UI" type="Control" parent="."]
 use_parent_material = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b45b1fvtil08l"]
+[gd_scene load_steps=18 format=3 uid="uid://b45b1fvtil08l"]
 
 [ext_resource type="Script" path="res://scripts/mass.gd" id="1_35tdq"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="2_vbvr8"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bwpc3qkv6v0x2" path="res://sprites/jupiter.png" id="13_3tihe"]
 [ext_resource type="Shape2D" uid="uid://cc2ouuquqfdtl" path="res://shapes/stardust.tres" id="13_6sbk7"]
 [ext_resource type="Texture2D" uid="uid://doh2x1rcq7vry" path="res://sprites/sun.png" id="14_wvivl"]
+[ext_resource type="Texture2D" uid="uid://ymfgy07evs7r" path="res://sprites/blackhole.png" id="15_gdyc8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i6hfm"]
 animations = [{
@@ -57,6 +58,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("14_wvivl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_gdyc8")
 }],
 "loop": false,
 "name": &"default",
@@ -65,6 +69,7 @@ animations = [{
 
 [node name="Mass" type="Node2D" node_paths=PackedStringArray("sprite", "shape")]
 use_parent_material = true
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_35tdq")
 sprite = NodePath("AnimatedSprite2D")
 shape = NodePath("Area2D/CollisionShape2D")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://do4ad7d6xmg37"]
+[gd_scene load_steps=19 format=3 uid="uid://do4ad7d6xmg37"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_r5oyr"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="1_thhjq"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bwpc3qkv6v0x2" path="res://sprites/jupiter.png" id="13_jyxw6"]
 [ext_resource type="Shape2D" uid="uid://uat8bfpovmol" path="res://shapes/asteroid.tres" id="13_pfhjy"]
 [ext_resource type="Texture2D" uid="uid://doh2x1rcq7vry" path="res://sprites/sun.png" id="14_cxhaw"]
+[ext_resource type="Texture2D" uid="uid://ymfgy07evs7r" path="res://sprites/blackhole.png" id="15_x5y2a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_koinw"]
 
@@ -59,6 +60,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("14_cxhaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_x5y2a")
 }],
 "loop": false,
 "name": &"default",

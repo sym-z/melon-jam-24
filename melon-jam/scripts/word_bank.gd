@@ -2,7 +2,7 @@ extends Node
 
 @onready var textFile = 'res://text/wb.txt'
 @onready var bank = {}
-@onready var LEVELS = 12
+@onready var LEVELS = 13
 
 func _ready() -> void:
 	buildBank()

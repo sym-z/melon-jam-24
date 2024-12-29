@@ -48,7 +48,10 @@ var urns : CircleShape2D = preload("res://shapes/uranus.tres")
 var sat : CircleShape2D = preload("res://shapes/saturn.tres")
 var jup : CircleShape2D = preload("res://shapes/jupiter.tres")
 var sun : CircleShape2D = preload("res://shapes/sun.tres")
-var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun]
+var bh : CircleShape2D = preload("res://shapes/blackhole.tres")
+var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun,bh]
+
+
 func _ready() -> void:
 	WordBank.loadFromFile(WordBank.textFile)
 	currentSpawn = westSpawnZone
@@ -56,8 +59,12 @@ func _ready() -> void:
 
 func newWord():
 	wordNum+=1
+	# MOVE TO NEXT PLANET
 	if wordNum > wordsPerGrow:
 		currLevel += 1
+		if currLevel > WordBank.LEVELS:
+			# GAME WON!
+			print("GAME WON!")
 	currentLetter = 0
 	currentWord = getRandomWord()
 	makeMassesFromWord(currentWord)
@@ -66,8 +73,12 @@ func newWord():
 	if wordNum > wordsPerGrow:
 		wordNum=1
 		player.sprite.frame = currLevel
-		#player.changeRadius(currLevel)
 		player.shape.shape = COLL_SHAPES[currLevel]
+	for mass in massParent.get_children():
+			mass.sprite.frame = currLevel - 1
+			mass.shape.shape = COLL_SHAPES[currLevel-1]
+			mass.adjustOffset()
+			mass.sprite.visible = true
 	print(currentWord)
 	
 # For each letter in word, make a mass in the current spawn box.
@@ -115,11 +126,7 @@ func removeMass():
 		massParent.remove_child(child)
 	if currentLetter >= currentWord.length():
 		newWord()
-		for mass in massParent.get_children():
-			mass.sprite.frame = currLevel - 1
-			mass.shape.shape = COLL_SHAPES[currLevel-1]
-			mass.adjustOffset()
-			mass.sprite.visible = true
+		
 
 
 var tween : Tween
