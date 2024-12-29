@@ -111,6 +111,7 @@ offset_right = 256.0
 offset_bottom = 240.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+use_parent_material = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -128,6 +129,7 @@ text = "[center]atmospheric[/center]"
 fit_content = true
 
 [node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer"]
+use_parent_material = true
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("9_olape")

@@ -70,6 +70,7 @@ func newWord():
 		player.shape.shape = COLL_SHAPES[currLevel]
 	print(currentWord)
 	
+# For each letter in word, make a mass in the current spawn box.
 func makeMassesFromWord(word :String):
 	for letter in word:
 		var box = currentSpawn.shape.get_rect()
