@@ -51,11 +51,34 @@ var sun : CircleShape2D = preload("res://shapes/sun.tres")
 var bh : CircleShape2D = preload("res://shapes/blackhole.tres")
 var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun,bh]
 
-
+## Tracks player progress
+@export var timer : Timer
+## How many seconds are on the timer when the game starts
+@export var startingSeconds : float = 4.0
+## How much time is awarded when a word is fully typed
+@export var secondsPerWord : float = 1.0
+## How much time is awarded when a level is fully completed
+@export var secondsPerLevel : float = 3.0
+## How much time is deducted when an erroneous keystroke happens
+@export var timePenalty : float = 0.5
+## The text label that shows the remaining time
+@export var timeLabel : RichTextLabel
+## Keeps track of time during pause
+var backupTimeLabel : String
 func _ready() -> void:
+	timer.wait_time = startingSeconds
 	WordBank.loadFromFile(WordBank.textFile)
 	currentSpawn = westSpawnZone
 	newWord()
+	timer.start()
+
+func _process(delta):
+	var timeText : String = str(floor(timer.time_left))
+	if !timer.is_stopped():
+		timeLabel.text = "\n[center]" + timeText + "[/center]"
+		backupTimeLabel = timeText
+	else:
+		timeLabel.text = "\n[center]" + backupTimeLabel + "[/center]"
 
 func newWord():
 	wordNum+=1
@@ -65,6 +88,12 @@ func newWord():
 		if currLevel > WordBank.LEVELS:
 			# GAME WON!
 			print("GAME WON!")
+		timer.set_wait_time(timer.wait_time + secondsPerLevel)
+		print("timer big bump")
+	else:
+		timer.set_wait_time(timer.wait_time + secondsPerWord)
+		print("timer small bump")
+
 	currentLetter = 0
 	currentWord = getRandomWord()
 	makeMassesFromWord(currentWord)
@@ -126,7 +155,9 @@ func removeMass():
 		massParent.remove_child(child)
 	if currentLetter >= currentWord.length():
 		newWord()
-		
+		# resume timer after new word is made, with time left remaining
+		timer.start(timer.time_left)
+	
 
 
 var tween : Tween
@@ -143,6 +174,8 @@ func _input(event: InputEvent) -> void:
 					pass
 				else:
 					print("DONE!!")
+					# Pause timer for animation
+					timer.stop()
 					if(massParent.get_child_count()):
 						tween = create_tween().set_trans(Tween.TRANS_QUAD)
 						var childArr = massParent.get_children()
@@ -158,3 +191,11 @@ func _input(event: InputEvent) -> void:
 								tween.connect("finished", removeMass)
 			else:
 				print("FALSE")
+
+
+func _on_timer_timeout() -> void:
+	print("GAME OVER!")
+	call_deferred("next_scene")
+
+func next_scene():
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

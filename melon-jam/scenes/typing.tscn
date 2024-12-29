@@ -22,7 +22,7 @@ size = Vector2(61, 125)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ea6j"]
 size = Vector2(218, 48)
 
-[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel")]
+[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel", "timer", "timeLabel")]
 material = SubResource("ShaderMaterial_at7qc")
 use_parent_material = true
 script = ExtResource("1_7fg4x")
@@ -32,7 +32,9 @@ westSpawnZone = NodePath("Masses/Mass Spawn Zones/West/West Spawn Zone")
 northSpawnZone = NodePath("Masses/Mass Spawn Zones/North/North Spawn Zone")
 eastSpawnZone = NodePath("Masses/Mass Spawn Zones/East/East Spawn Zone")
 southSpawnZone = NodePath("Masses/Mass Spawn Zones/South/South Spawn Zone")
-wordLabel = NodePath("UI/HBoxContainer/RichTextLabel")
+wordLabel = NodePath("UI/HBoxContainer/Word Label")
+timer = NodePath("Timer")
+timeLabel = NodePath("UI/HBoxContainer/CenterContainer/Timer Label")
 tweenDur = 0.3
 
 [node name="Background" type="Sprite2D" parent="."]
@@ -98,7 +100,7 @@ anchor_right = 1.0
 offset_bottom = 60.0
 grow_horizontal = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI/HBoxContainer"]
+[node name="Word Label" type="RichTextLabel" parent="UI/HBoxContainer"]
 use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -108,8 +110,31 @@ bbcode_enabled = true
 text = "[center]atmospheric[/center]"
 fit_content = true
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="UI/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/CenterContainer"]
 use_parent_material = true
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("9_olape")
+
+[node name="Timer Label" type="RichTextLabel" parent="UI/HBoxContainer/CenterContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(64, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("7_cp658")
+bbcode_enabled = true
+text = "
+[center]5[/center]"
+fit_content = true
+visible_characters_behavior = 1
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
