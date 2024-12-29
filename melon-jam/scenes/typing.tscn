@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=13 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
 [ext_resource type="Texture2D" uid="uid://cjq0xo3lvoaoy" path="res://sprites/player.png" id="2_dlvbi"]
@@ -6,23 +6,24 @@
 [ext_resource type="Texture2D" uid="uid://d2iqj3jd6e4ao" path="res://sprites/temp-bg.png" id="4_45qje"]
 [ext_resource type="PackedScene" uid="uid://do4ad7d6xmg37" path="res://scenes/player.tscn" id="4_mwn3l"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="6_f1k2r"]
+[ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="7_cp658"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_at7qc"]
 shader = ExtResource("6_f1k2r")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yfhig"]
-size = Vector2(55, 135)
+size = Vector2(64, 135)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mopq7"]
-size = Vector2(209, 48)
+size = Vector2(218, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u46e7"]
 size = Vector2(61, 135)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ea6j"]
-size = Vector2(209, 48)
+size = Vector2(218, 48)
 
-[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone")]
+[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel")]
 material = SubResource("ShaderMaterial_at7qc")
 use_parent_material = true
 script = ExtResource("1_7fg4x")
@@ -32,6 +33,7 @@ westSpawnZone = NodePath("West/West Spawn Zone")
 northSpawnZone = NodePath("North/North Spawn Zone")
 eastSpawnZone = NodePath("East/East Spawn Zone")
 southSpawnZone = NodePath("South/South Spawn Zone")
+wordLabel = NodePath("UI/RichTextLabel")
 tweenDur = 0.3
 
 [node name="Temp Sprites" type="Node2D" parent="."]
@@ -66,7 +68,7 @@ use_parent_material = true
 
 [node name="West Spawn Zone" type="CollisionShape2D" parent="West"]
 use_parent_material = true
-position = Vector2(44.5, 117.5)
+position = Vector2(40, 117.5)
 shape = SubResource("RectangleShape2D_yfhig")
 
 [node name="North" type="Area2D" parent="."]
@@ -74,7 +76,7 @@ use_parent_material = true
 
 [node name="North Spawn Zone" type="CollisionShape2D" parent="North"]
 use_parent_material = true
-position = Vector2(121.5, 26)
+position = Vector2(117, 26)
 shape = SubResource("RectangleShape2D_mopq7")
 
 [node name="East" type="Area2D" parent="."]
@@ -90,5 +92,28 @@ use_parent_material = true
 
 [node name="South Spawn Zone" type="CollisionShape2D" parent="South"]
 use_parent_material = true
-position = Vector2(121.5, 182)
+position = Vector2(117, 182)
 shape = SubResource("RectangleShape2D_8ea6j")
+
+[node name="UI" type="Control" parent="."]
+use_parent_material = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 256.0
+offset_bottom = 240.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -92.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("7_cp658")
+bbcode_enabled = true
+text = "[center]atmospheric[/center]"
+fit_content = true
