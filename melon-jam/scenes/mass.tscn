@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b45b1fvtil08l"]
+[gd_scene load_steps=17 format=3 uid="uid://b45b1fvtil08l"]
 
 [ext_resource type="Script" path="res://scripts/mass.gd" id="1_35tdq"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="2_vbvr8"]
@@ -12,7 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://s4cxr3udx4xi" path="res://sprites/neptune.png" id="10_bweyb"]
 [ext_resource type="Texture2D" uid="uid://n2smdxbyf14y" path="res://sprites/uranus.png" id="11_h0qdo"]
 [ext_resource type="Texture2D" uid="uid://d23d1s1ukggx" path="res://sprites/saturn.png" id="12_3xcah"]
+[ext_resource type="Texture2D" uid="uid://bwpc3qkv6v0x2" path="res://sprites/jupiter.png" id="13_3tihe"]
 [ext_resource type="Shape2D" uid="uid://cc2ouuquqfdtl" path="res://shapes/stardust.tres" id="13_6sbk7"]
+[ext_resource type="Texture2D" uid="uid://doh2x1rcq7vry" path="res://sprites/sun.png" id="14_wvivl"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i6hfm"]
 animations = [{
@@ -49,6 +51,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("12_3xcah")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_3tihe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_wvivl")
 }],
 "loop": false,
 "name": &"default",
