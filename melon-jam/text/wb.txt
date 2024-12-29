@@ -31,7 +31,7 @@ Attract
 Repel
 Retract
 Constellation
-Zodiac 
+Zodiac
 Magnetism
 Nebula
 Supernova

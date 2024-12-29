@@ -11,16 +11,16 @@
 shader = ExtResource("6_f1k2r")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yfhig"]
-size = Vector2(50, 122)
+size = Vector2(55, 135)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mopq7"]
-size = Vector2(188, 42)
+size = Vector2(209, 48)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u46e7"]
-size = Vector2(48, 118)
+size = Vector2(61, 135)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ea6j"]
-size = Vector2(189, 46)
+size = Vector2(209, 48)
 
 [node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone")]
 material = SubResource("ShaderMaterial_at7qc")
@@ -66,7 +66,7 @@ use_parent_material = true
 
 [node name="West Spawn Zone" type="CollisionShape2D" parent="West"]
 use_parent_material = true
-position = Vector2(57, 116)
+position = Vector2(44.5, 117.5)
 shape = SubResource("RectangleShape2D_yfhig")
 
 [node name="North" type="Area2D" parent="."]
@@ -74,7 +74,7 @@ use_parent_material = true
 
 [node name="North Spawn Zone" type="CollisionShape2D" parent="North"]
 use_parent_material = true
-position = Vector2(126, 29)
+position = Vector2(121.5, 26)
 shape = SubResource("RectangleShape2D_mopq7")
 
 [node name="East" type="Area2D" parent="."]
@@ -82,7 +82,7 @@ use_parent_material = true
 
 [node name="East Spawn Zone" type="CollisionShape2D" parent="East"]
 use_parent_material = true
-position = Vector2(196, 115)
+position = Vector2(195.5, 117.5)
 shape = SubResource("RectangleShape2D_u46e7")
 
 [node name="South" type="Area2D" parent="."]
@@ -90,5 +90,5 @@ use_parent_material = true
 
 [node name="South Spawn Zone" type="CollisionShape2D" parent="South"]
 use_parent_material = true
-position = Vector2(125.5, 208)
+position = Vector2(121.5, 182)
 shape = SubResource("RectangleShape2D_8ea6j")
