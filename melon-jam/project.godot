@@ -23,6 +23,7 @@ WordBank="*res://scripts/word_bank.gd"
 
 window/size/viewport_width=256
 window/size/viewport_height=240
+window/size/initial_position_type=0
 window/size/window_width_override=1024
 window/size/window_height_override=960
 window/stretch/mode="viewport"

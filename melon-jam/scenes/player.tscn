@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://do4ad7d6xmg37"]
+[gd_scene load_steps=16 format=3 uid="uid://do4ad7d6xmg37"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_r5oyr"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="1_thhjq"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://s4cxr3udx4xi" path="res://sprites/neptune.png" id="10_21afd"]
 [ext_resource type="Texture2D" uid="uid://n2smdxbyf14y" path="res://sprites/uranus.png" id="11_dsct6"]
 [ext_resource type="Texture2D" uid="uid://d23d1s1ukggx" path="res://sprites/saturn.png" id="12_ogjp3"]
+[ext_resource type="Shape2D" uid="uid://uat8bfpovmol" path="res://shapes/asteroid.tres" id="13_pfhjy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_koinw"]
 
@@ -56,12 +57,22 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("sprite", "shape", "area")]
 script = ExtResource("1_r5oyr")
 sprite = NodePath("AnimatedSprite2D")
+shape = NodePath("Area2D/CollisionShape2D")
+area = NodePath("Area2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_koinw")
 use_parent_material = true
 sprite_frames = SubResource("SpriteFrames_aqjtg")
 frame = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = ExtResource("13_pfhjy")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

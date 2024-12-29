@@ -32,6 +32,7 @@ westSpawnZone = NodePath("West/West Spawn Zone")
 northSpawnZone = NodePath("North/North Spawn Zone")
 eastSpawnZone = NodePath("East/East Spawn Zone")
 southSpawnZone = NodePath("South/South Spawn Zone")
+tweenDur = 0.3
 
 [node name="Temp Sprites" type="Node2D" parent="."]
 use_parent_material = true
@@ -57,7 +58,6 @@ centered = false
 use_parent_material = true
 
 [node name="Player" parent="." instance=ExtResource("4_mwn3l")]
-z_index = 10
 use_parent_material = true
 position = Vector2(128, 120)
 

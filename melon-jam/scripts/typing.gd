@@ -31,8 +31,21 @@ var wordsPerGrow : int = 3
 ## What word the player is on within the current planet level
 var wordNum : int = 0
 
-
-
+## Shapes of collision boxes
+var sd : CircleShape2D = preload("res://shapes/stardust.tres")
+var ast : CircleShape2D = preload("res://shapes/asteroid.tres")
+var moon : CircleShape2D = preload("res://shapes/moon.tres")
+var plut : CircleShape2D = preload("res://shapes/pluto.tres")
+var merc : CircleShape2D = preload("res://shapes/mercury.tres")
+var mars : CircleShape2D = preload("res://shapes/mars.tres")
+var vens : CircleShape2D = preload("res://shapes/venus.tres")
+var erth : CircleShape2D = preload("res://shapes/earth.tres")
+var nept : CircleShape2D = preload("res://shapes/neptune.tres")
+var urns : CircleShape2D = preload("res://shapes/uranus.tres")
+var sat : CircleShape2D = preload("res://shapes/saturn.tres")
+var jup : CircleShape2D = preload("res://shapes/jupiter.tres")
+var sun : CircleShape2D = preload("res://shapes/sun.tres")
+var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun]
 func _ready() -> void:
 	WordBank.loadFromFile(WordBank.textFile)
 	currentSpawn = westSpawnZone
@@ -50,6 +63,8 @@ func newWord():
 	if wordNum > wordsPerGrow:
 		wordNum=1
 		player.sprite.frame = currLevel
+		#player.changeRadius(currLevel)
+		player.shape.shape = COLL_SHAPES[currLevel]
 	print(currentWord)
 	
 func makeMassesFromWord(word :String):
@@ -95,9 +110,13 @@ func removeMass():
 		newWord()
 		for mass in massParent.get_children():
 			mass.sprite.frame = currLevel - 1
+			mass.shape.shape = COLL_SHAPES[currLevel-1]
+			mass.adjustOffset()
+			mass.sprite.visible = true
+
 
 var tween : Tween
-var tweenDur : float = 0.15
+@export var tweenDur : float = 0.15
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_released():
 			# Prevent keyboard mashing
@@ -110,10 +129,15 @@ func _input(event: InputEvent) -> void:
 				else:
 					print("DONE!!")
 					if(massParent.get_child_count()):
-						tween = create_tween()
+						tween = create_tween().set_trans(Tween.TRANS_QUAD)
 						var childArr = massParent.get_children()
 						for i in range(childArr.size()):
-							tween.tween_property(childArr[i].sprite,"global_position",player.global_position,tweenDur)
+							var xDelta = childArr[i].sprite.sprite_frames.get_frame_texture(childArr[i].sprite.animation,childArr[i].sprite.frame).get_width() / 2
+							var yDelta = childArr[i].sprite.sprite_frames.get_frame_texture(childArr[i].sprite.animation,childArr[i].sprite.frame).get_height() / 2
+							var deltaVector : Vector2 = Vector2(xDelta,yDelta)
+							tween.tween_property(childArr[i].sprite,"global_position",player.global_position-deltaVector,tweenDur)
+							tween.set_parallel();
+							tween.tween_property(childArr[i].shape,"global_position",player.global_position-deltaVector,tweenDur)
 							if i == childArr.size()-1:
 								tween.connect("finished", removeMass)
 			else:
