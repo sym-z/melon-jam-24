@@ -22,6 +22,7 @@ extends Node2D
 @export var wordLabel : RichTextLabel
 
 @export var levelLabels : AnimatedSprite2D
+@export var tipSprite : Sprite2D
 ## For instantiating and referencing
 var massScene = preload("res://scenes/mass.tscn")
 var playerScene = preload("res://scenes/player.tscn")
@@ -260,6 +261,7 @@ func pullUI():
 	throwToCenter(wordContainer)
 	throwToCenter(levelLabels)
 	throwToCenter(background)
+	throwToCenter(tipSprite)
 	tween.connect("finished", win_scene)
 
 

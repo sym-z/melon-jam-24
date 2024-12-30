@@ -15,6 +15,7 @@ config/description="A submission for the Winter Melon Jam 2024 game jam."
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0.152941, 0.164706, 0.196078, 1)
+boot_splash/show_image=false
 config/icon="res://sprites/icon.png"
 
 [autoload]

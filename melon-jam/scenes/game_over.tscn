@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cg7u6mqgqslcl"]
+[gd_scene load_steps=9 format=3 uid="uid://cg7u6mqgqslcl"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_7o88n"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_vr8la"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="2_5g7vs"]
 [ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_5d5a4"]
+[ext_resource type="Material" uid="uid://b6aswbdwmdae" path="res://shaders/LevelLabelShader.tres" id="4_q4lfp"]
 [ext_resource type="Theme" uid="uid://c6o11wuk1wcp8" path="res://themes/buttons.tres" id="5_ger4a"]
 [ext_resource type="Texture2D" uid="uid://jvb2q7a1byue" path="res://sprites/continue.png" id="5_t4uhj"]
 
@@ -49,6 +50,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+material = ExtResource("4_q4lfp")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_5g7vs")
 bbcode_enabled = true
@@ -56,6 +58,7 @@ text = "[center]you lost![/center]"
 fit_content = true
 
 [node name="Continue Button" type="Button" parent="VBoxContainer"]
+material = ExtResource("4_q4lfp")
 layout_mode = 2
 theme = ExtResource("5_ger4a")
 theme_override_fonts/font = ExtResource("2_5g7vs")
@@ -63,7 +66,7 @@ icon = ExtResource("5_t4uhj")
 icon_alignment = 1
 
 [node name="Score Text" type="RichTextLabel" parent="VBoxContainer"]
-use_parent_material = true
+material = ExtResource("4_q4lfp")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_5g7vs")
 bbcode_enabled = true
@@ -71,7 +74,7 @@ text = "[center]score: [/center]"
 fit_content = true
 
 [node name="Mistakes Text" type="RichTextLabel" parent="VBoxContainer"]
-use_parent_material = true
+material = ExtResource("4_q4lfp")
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_5g7vs")
 bbcode_enabled = true

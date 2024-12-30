@@ -1,20 +1,47 @@
-[gd_scene load_steps=12 format=3 uid="uid://degxwd8m5fbt7"]
+[gd_scene load_steps=18 format=3 uid="uid://degxwd8m5fbt7"]
 
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_2brmx"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_l5uq4"]
 [ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_jop78"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="3_km81b"]
+[ext_resource type="Material" uid="uid://b6aswbdwmdae" path="res://shaders/LevelLabelShader.tres" id="4_0evlq"]
 [ext_resource type="Texture2D" uid="uid://bqytbpm2ry6qs" path="res://sprites/title.png" id="4_nblvi"]
 [ext_resource type="Theme" uid="uid://c6o11wuk1wcp8" path="res://themes/buttons.tres" id="5_vxpxv"]
 [ext_resource type="Texture2D" uid="uid://rh566ilchac4" path="res://sprites/play.png" id="6_6ml5w"]
 [ext_resource type="StyleBox" uid="uid://bcuhqh8yocvhs" path="res://boxes/pressed.tres" id="6_j8upe"]
 [ext_resource type="StyleBox" uid="uid://cis2t5wwstcf8" path="res://boxes/hover.tres" id="7_hyupm"]
 [ext_resource type="StyleBox" uid="uid://ckm2nmudqjfx4" path="res://boxes/normal.tres" id="8_smd40"]
+[ext_resource type="Texture2D" uid="uid://c3f6jlm135vml" path="res://sprites/opening.png" id="12_lx2a4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_62mty"]
 shader = ExtResource("1_2brmx")
 
-[node name="Main Menu" type="Control"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ro343"]
+shader = ExtResource("1_2brmx")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evbxf"]
+atlas = ExtResource("12_lx2a4")
+region = Rect2(0, 0, 256, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iet52"]
+atlas = ExtResource("12_lx2a4")
+region = Rect2(256, 0, 256, 240)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ljr3b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evbxf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iet52")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.5
+}]
+
+[node name="Main Menu" type="Control" node_paths=PackedStringArray("openingSprite")]
 material = SubResource("ShaderMaterial_62mty")
 use_parent_material = true
 layout_mode = 3
@@ -24,6 +51,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l5uq4")
+openingSprite = NodePath("Opening")
 metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="."]
@@ -37,7 +65,7 @@ grow_vertical = 2
 texture = ExtResource("3_jop78")
 
 [node name="Title Text" type="TextureRect" parent="."]
-use_parent_material = true
+material = ExtResource("4_0evlq")
 layout_mode = 0
 offset_top = 77.0
 offset_right = 128.0
@@ -46,7 +74,7 @@ scale = Vector2(2, 1)
 texture = ExtResource("4_nblvi")
 
 [node name="Play Button" type="Button" parent="."]
-use_parent_material = true
+material = ExtResource("4_0evlq")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -73,4 +101,13 @@ theme_override_styles/normal = ExtResource("8_smd40")
 icon = ExtResource("6_6ml5w")
 icon_alignment = 1
 
+[node name="Opening" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_ro343")
+sprite_frames = SubResource("SpriteFrames_ljr3b")
+autoplay = "default"
+frame = 1
+frame_progress = 1.0
+centered = false
+
 [connection signal="button_up" from="Play Button" to="." method="_on_play_button_button_up"]
+[connection signal="animation_finished" from="Opening" to="." method="_on_opening_animation_finished"]
