@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=32 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
 [ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_mrnyc"]
+[ext_resource type="Texture2D" uid="uid://d2iqj3jd6e4ao" path="res://sprites/temp-bg.png" id="4_ag1sh"]
 [ext_resource type="PackedScene" uid="uid://do4ad7d6xmg37" path="res://scenes/player.tscn" id="4_mwn3l"]
 [ext_resource type="Shader" path="res://shaders/crt-wiggle.gdshader" id="5_0osbp"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="6_f1k2r"]
@@ -11,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://c8rubfsscgiia" path="res://sprites/level-labels.png" id="9_ea7f4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_at7qc"]
+shader = ExtResource("6_f1k2r")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_giotb"]
 shader = ExtResource("6_f1k2r")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yfhig"]
@@ -127,7 +131,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "uiParent", "wordContainer", "timerLabel", "timerOverlay", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel", "timer", "timeLabel")]
+[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "uiParent", "wordContainer", "timerLabel", "timerOverlay", "background", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel", "levelLabels", "timer", "timeLabel")]
 material = SubResource("ShaderMaterial_at7qc")
 use_parent_material = true
 script = ExtResource("1_7fg4x")
@@ -137,14 +141,21 @@ uiParent = NodePath("UI")
 wordContainer = NodePath("UI/HBoxContainer")
 timerLabel = NodePath("UI/Timer Label")
 timerOverlay = NodePath("UI/HBoxContainer/CenterContainer")
+background = NodePath("Background")
 westSpawnZone = NodePath("Masses/Mass Spawn Zones/West/West Spawn Zone")
 northSpawnZone = NodePath("Masses/Mass Spawn Zones/North/North Spawn Zone")
 eastSpawnZone = NodePath("Masses/Mass Spawn Zones/East/East Spawn Zone")
 southSpawnZone = NodePath("Masses/Mass Spawn Zones/South/South Spawn Zone")
 wordLabel = NodePath("UI/HBoxContainer/Word Label")
+levelLabels = NodePath("Level Labels")
 timer = NodePath("Timer")
 timeLabel = NodePath("UI/Timer Label")
 tweenDur = 0.3
+
+[node name="Secret Background" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_giotb")
+texture = ExtResource("4_ag1sh")
+centered = false
 
 [node name="Background" type="Sprite2D" parent="."]
 use_parent_material = true
@@ -255,6 +266,7 @@ visible_characters_behavior = 1
 one_shot = true
 
 [node name="Level Labels" type="AnimatedSprite2D" parent="."]
+z_index = 10
 material = ExtResource("8_ws780")
 position = Vector2(128, 231)
 sprite_frames = SubResource("SpriteFrames_fncjp")
