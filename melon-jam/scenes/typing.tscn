@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=38 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
 [ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_mrnyc"]
@@ -11,6 +11,9 @@
 [ext_resource type="Material" uid="uid://b6aswbdwmdae" path="res://shaders/LevelLabelShader.tres" id="8_ws780"]
 [ext_resource type="Texture2D" uid="uid://c8rubfsscgiia" path="res://sprites/level-labels.png" id="9_ea7f4"]
 [ext_resource type="Texture2D" uid="uid://dv1ewx7cov58s" path="res://sprites/type-prompt.png" id="11_ukad4"]
+[ext_resource type="AudioStream" uid="uid://bwo8hmtdlcjx1" path="res://audio/type.mp3" id="12_ywylb"]
+[ext_resource type="AudioStream" uid="uid://dw2bicu1qt256" path="res://audio/typo.mp3" id="13_q2brq"]
+[ext_resource type="AudioStream" uid="uid://2dqcaecg7e02" path="res://audio/word-clear.mp3" id="14_sy6lt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_at7qc"]
 shader = ExtResource("6_f1k2r")
@@ -137,7 +140,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "uiParent", "wordContainer", "timerLabel", "timerOverlay", "background", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel", "levelLabels", "tipSprite", "timer", "timeLabel")]
+[node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "uiParent", "wordContainer", "timerLabel", "timerOverlay", "background", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel", "levelLabels", "tipSprite", "timer", "timeLabel", "typeNoise", "typoNoise", "wordClearNoise")]
 material = SubResource("ShaderMaterial_at7qc")
 use_parent_material = true
 script = ExtResource("1_7fg4x")
@@ -157,6 +160,9 @@ levelLabels = NodePath("Level Labels")
 tipSprite = NodePath("Tip Sprite")
 timer = NodePath("Timer")
 timeLabel = NodePath("UI/Timer Label")
+typeNoise = NodePath("Speakers/Type Noise")
+typoNoise = NodePath("Speakers/Typo Noise")
+wordClearNoise = NodePath("Speakers/Word Clear Noise")
 tweenDur = 0.3
 
 [node name="Secret Background" type="Sprite2D" parent="."]
@@ -284,5 +290,16 @@ sprite_frames = SubResource("SpriteFrames_fncjp")
 material = ExtResource("8_ws780")
 position = Vector2(100, 12)
 texture = ExtResource("11_ukad4")
+
+[node name="Speakers" type="Node2D" parent="."]
+
+[node name="Type Noise" type="AudioStreamPlayer2D" parent="Speakers"]
+stream = ExtResource("12_ywylb")
+
+[node name="Typo Noise" type="AudioStreamPlayer2D" parent="Speakers"]
+stream = ExtResource("13_q2brq")
+
+[node name="Word Clear Noise" type="AudioStreamPlayer2D" parent="Speakers"]
+stream = ExtResource("14_sy6lt")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

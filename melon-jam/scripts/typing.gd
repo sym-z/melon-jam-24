@@ -77,6 +77,10 @@ var hitMat : ShaderMaterial = preload("res://shaders/hurt-material.tres")
 ## Keeps track of time during pause
 var backupTimeLabel : String
 
+@export var typeNoise : AudioStreamPlayer2D
+@export var typoNoise : AudioStreamPlayer2D
+@export var wordClearNoise : AudioStreamPlayer2D
+
 var gameWon: bool = false
 func _ready() -> void:
 	timer.wait_time = startingSeconds
@@ -178,6 +182,7 @@ var tween : Tween
 var massScalar : float = 1.0
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_released() and event.keycode <= 90 and event.keycode>= 65:
+			typeNoise.play()
 			# Prevent keyboard mashing
 			print(event.keycode)
 			if currentLetter < currentWord.length() and String.chr(event.keycode) == currentWord[currentLetter]:
@@ -202,6 +207,7 @@ func _input(event: InputEvent) -> void:
 							scalarVec = Vector2(massScalar,massScalar)
 							# Add scalar Vec to all sprites
 					print("DONE!!")
+					wordClearNoise.play()
 					if currLevel > WordBank.LEVELS:
 						gameWon = true
 						pullUI()
@@ -223,6 +229,7 @@ func _input(event: InputEvent) -> void:
 								tween.connect("finished", removeMass)
 			else:
 				print("FALSE")
+				typoNoise.play()
 				Globals.mistakes += 1
 				# Make the penalty increase per level (0.5 sec per level) 
 				# (currLevel-1)/(1/secondsPerLevel)
