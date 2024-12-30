@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://degxwd8m5fbt7"]
+[gd_scene load_steps=8 format=3 uid="uid://degxwd8m5fbt7"]
 
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_2brmx"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_l5uq4"]
-[ext_resource type="Texture2D" uid="uid://dgrycmyvihbbf" path="res://sprites/background.png" id="3_0e6sn"]
+[ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_jop78"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="3_km81b"]
+[ext_resource type="Texture2D" uid="uid://bqytbpm2ry6qs" path="res://sprites/title.png" id="4_nblvi"]
+[ext_resource type="Texture2D" uid="uid://rh566ilchac4" path="res://sprites/play.png" id="6_6ml5w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_62mty"]
 shader = ExtResource("1_2brmx")
@@ -20,7 +22,7 @@ grow_vertical = 2
 script = ExtResource("1_l5uq4")
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 use_parent_material = true
 layout_mode = 1
 anchors_preset = 15
@@ -28,7 +30,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_0e6sn")
+texture = ExtResource("3_jop78")
+
+[node name="Title Text" type="TextureRect" parent="."]
+use_parent_material = true
+layout_mode = 0
+offset_top = 43.0
+offset_right = 128.0
+offset_bottom = 103.0
+scale = Vector2(2, 1)
+texture = ExtResource("4_nblvi")
 
 [node name="Play Button" type="Button" parent="."]
 use_parent_material = true
@@ -45,6 +56,6 @@ offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_km81b")
-text = "play"
+icon = ExtResource("6_6ml5w")
 
 [connection signal="button_up" from="Play Button" to="." method="_on_play_button_button_up"]

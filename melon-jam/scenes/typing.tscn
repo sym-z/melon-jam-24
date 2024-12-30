@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
-[ext_resource type="Texture2D" uid="uid://dgrycmyvihbbf" path="res://sprites/background.png" id="3_bwbys"]
+[ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_mrnyc"]
 [ext_resource type="PackedScene" uid="uid://do4ad7d6xmg37" path="res://scenes/player.tscn" id="4_mwn3l"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="6_f1k2r"]
 [ext_resource type="Texture2D" uid="uid://ysw0xiqt33ic" path="res://sprites/timer-remodel.png" id="6_ugwpl"]
@@ -43,7 +43,7 @@ tweenDur = 0.3
 
 [node name="Background" type="Sprite2D" parent="."]
 use_parent_material = true
-texture = ExtResource("3_bwbys")
+texture = ExtResource("3_mrnyc")
 centered = false
 
 [node name="Masses" type="Node2D" parent="."]
