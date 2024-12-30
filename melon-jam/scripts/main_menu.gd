@@ -7,6 +7,5 @@ func next_scene():
 func _on_play_button_button_up():
 	call_deferred("next_scene")
 
-
 func _on_opening_animation_finished():
 	openingSprite.visible = false

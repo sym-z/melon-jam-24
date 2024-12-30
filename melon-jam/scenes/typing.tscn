@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=35 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
 [ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_mrnyc"]
@@ -32,6 +32,11 @@ size = Vector2(218, 48)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3en3d"]
 shader = ExtResource("5_0osbp")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tf1g4"]
+shader = ExtResource("6_f1k2r")
+
+[sub_resource type="Theme" id="Theme_g6iqc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dding"]
 atlas = ExtResource("9_ea7f4")
@@ -222,16 +227,19 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 60.0
 grow_horizontal = 2
+theme_override_constants/separation = -10
 
 [node name="Word Label" type="RichTextLabel" parent="UI/HBoxContainer"]
-material = ExtResource("8_ws780")
+material = SubResource("ShaderMaterial_tf1g4")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme = SubResource("Theme_g6iqc")
 theme_override_fonts/normal_font = ExtResource("7_cp658")
 bbcode_enabled = true
-text = "[center]atmospheric[/center]"
+text = "[center]a[/center]"
 fit_content = true
+autowrap_mode = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/HBoxContainer"]
 use_parent_material = true
@@ -274,7 +282,7 @@ sprite_frames = SubResource("SpriteFrames_fncjp")
 
 [node name="Tip Sprite" type="Sprite2D" parent="."]
 material = ExtResource("8_ws780")
-position = Vector2(94, 12)
+position = Vector2(100, 12)
 texture = ExtResource("11_ukad4")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

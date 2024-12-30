@@ -177,8 +177,9 @@ var tween : Tween
 @export var tweenDur : float = 0.15
 var massScalar : float = 1.0
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.is_released():
+	if event is InputEventKey and event.is_released() and event.keycode <= 90 and event.keycode>= 65:
 			# Prevent keyboard mashing
+			print(event.keycode)
 			if currentLetter < currentWord.length() and String.chr(event.keycode) == currentWord[currentLetter]:
 				print("CORRECT")
 				currentLetter+=1
@@ -193,6 +194,8 @@ func _input(event: InputEvent) -> void:
 					massParent.get_child(currentLetter-1).material = hitMat
 					if wordNum >= wordsPerGrow:
 						currLevel += 1
+						if currLevel > 10:
+							wordLabel.add_theme_font_size_override("normal_font_size", 13)
 						if currLevel <= WordBank.LEVELS:
 							levelLabels.frame = currLevel-1
 							massScalar = clamp(currLevel - 5,0,INF)*0.1
