@@ -5,6 +5,11 @@ extends Node2D
 
 ## Holds all the instances of masses
 @export var massParent : Node2D
+## Holds all UI
+@export var uiParent : Control
+@export var wordContainer : HBoxContainer
+@export var timerLabel : RichTextLabel
+@export var timerOverlay: CenterContainer
 
 ## Where the letters spawn in
 @export var westSpawnZone : CollisionShape2D
@@ -60,25 +65,32 @@ var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun,bh
 ## How much time is awarded when a level is fully completed
 @export var secondsPerLevel : float = 3.0
 ## How much time is deducted when an erroneous keystroke happens
-@export var timePenalty : float = 0.5
+@export var timePenalty : float = 0.5;
 ## The text label that shows the remaining time
 @export var timeLabel : RichTextLabel
+## Time in seconds deducted per level increase
+@export var scalingPenalty : float = 0.5
 ## Keeps track of time during pause
 var backupTimeLabel : String
+
 func _ready() -> void:
 	timer.wait_time = startingSeconds
 	WordBank.loadFromFile(WordBank.textFile)
 	currentSpawn = westSpawnZone
 	newWord()
 	timer.start()
-
+	
 func _process(delta):
+	
+	if floor(timer.wait_time) > Globals.score:
+		Globals.score = floor(timer.wait_time)
+		print(Globals.score)
 	var timeText : String = str(floor(timer.time_left))
 	if !timer.is_stopped():
-		timeLabel.text = "\n[center]" + timeText + "[/center]"
+		timeLabel.text = "\n" + Globals.centerString(timeText)
 		backupTimeLabel = timeText
 	else:
-		timeLabel.text = "\n[center]" + backupTimeLabel + "[/center]"
+		timeLabel.text = "\n" + Globals.centerString(backupTimeLabel)
 
 func newWord():
 	wordNum+=1
@@ -88,16 +100,16 @@ func newWord():
 		if currLevel > WordBank.LEVELS:
 			# GAME WON!
 			print("GAME WON!")
+			pullUI()
 		timer.set_wait_time(timer.wait_time + secondsPerLevel)
 		print("timer big bump")
 	else:
 		timer.set_wait_time(timer.wait_time + secondsPerWord)
 		print("timer small bump")
-
 	currentLetter = 0
 	currentWord = getRandomWord()
 	makeMassesFromWord(currentWord)
-	wordLabel.text = "[center]"+currentWord.to_lower()+"[/center]"
+	wordLabel.text = Globals.centerString(currentWord.to_lower())
 	# Transform if the player has made enough words
 	if wordNum > wordsPerGrow:
 		wordNum=1
@@ -168,9 +180,9 @@ func _input(event: InputEvent) -> void:
 			if currentLetter < currentWord.length() and String.chr(event.keycode) == currentWord[currentLetter]:
 				print("CORRECT")
 				currentLetter+=1
-				wordLabel.text = "[center]"+currentWord.to_lower().erase(0,currentLetter)+"[/center]"
+				wordLabel.text = Globals.centerString(currentWord.to_lower().erase(0,currentLetter))
 				if currentLetter < currentWord.length():
-					## TODO: COOL ANIMATION TO SHOW LETTER WAS CORRECT
+					## TODO: COOL ANIMATION OR SOUND TO SHOW LETTER WAS CORRECT
 					pass
 				else:
 					print("DONE!!")
@@ -191,11 +203,50 @@ func _input(event: InputEvent) -> void:
 								tween.connect("finished", removeMass)
 			else:
 				print("FALSE")
-
-
+				# Make the penalty increase per level (0.5 sec per level) 
+				# (currLevel-1)/(1/secondsPerLevel)
+				# 1/0.5 = 2
+				# Level 1 tP + (1-1)/2 -> tP
+				# Level 2 tP + (2-1)/2 -> tP + 0.5
+				# Level 3 tP + (3-1)/2 -> tP + 1
+				# ...
+				var penaltyTime : float = timer.time_left - (timePenalty+(currLevel-1)/(1/scalingPenalty))
+				if penaltyTime < 0:
+					set_time(0.1)
+				else:
+					set_time(penaltyTime)
+## Sets word timer to any value given
+func set_time(sec : float):
+	timer.stop()
+	timer.set_wait_time(sec)
+	timer.start(timer.time_left)
 func _on_timer_timeout() -> void:
 	print("GAME OVER!")
-	call_deferred("next_scene")
+	call_deferred("loss_scene")
 
-func next_scene():
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+func win_scene():
+	get_tree().change_scene_to_file("res://scenes/game_won.tscn")
+func loss_scene():
+	get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+
+func pullUI():
+	var wordElements = wordContainer.get_children()
+	var totalWordElements = wordElements.size()
+	tween = create_tween().set_trans(Tween.TRANS_QUAD)
+	var childArr = wordElements
+	throwToCenter(timerLabel)
+	tween.set_parallel()
+	throwToCenter(wordLabel)
+	
+	for ele in wordContainer.get_children():
+		throwToCenter(ele)
+	tween.connect("finished", win_scene)
+
+
+func throwToCenter(n : Node):
+	var xDelta = n.size.x / 2
+	var yDelta = n.size.y / 2
+	var deltaVector : Vector2 = Vector2(xDelta,yDelta)
+	tween.tween_property(n,"position",Globals.SCREEN_CENTER,tweenDur)
+	tween.set_parallel()
+	tween.tween_property(n,"scale",Vector2.ZERO,tweenDur)
