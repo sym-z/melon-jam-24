@@ -1,0 +1,71 @@
+[gd_scene load_steps=17 format=3 uid="uid://0m2ev0spar1n"]
+
+[ext_resource type="Material" uid="uid://dy7tcheftph1l" path="res://shaders/playerMaterial.tres" id="1_tnfrr"]
+[ext_resource type="Texture2D" uid="uid://imeme21oiue5" path="res://sprites/asteroid.png" id="2_53bqd"]
+[ext_resource type="Texture2D" uid="uid://ymfgy07evs7r" path="res://sprites/blackhole.png" id="3_k2u1d"]
+[ext_resource type="Texture2D" uid="uid://curwqoyyp2mlo" path="res://sprites/earth.png" id="4_a34v6"]
+[ext_resource type="Texture2D" uid="uid://bwpc3qkv6v0x2" path="res://sprites/jupiter.png" id="5_ejoe7"]
+[ext_resource type="Texture2D" uid="uid://cuf8yjaipa7pv" path="res://sprites/mars.png" id="6_jiwj8"]
+[ext_resource type="Texture2D" uid="uid://vvo4f48xjpnq" path="res://sprites/mercury.png" id="7_ii84a"]
+[ext_resource type="Texture2D" uid="uid://brew2swdmbtc0" path="res://sprites/moon.png" id="8_pd3ln"]
+[ext_resource type="Texture2D" uid="uid://s4cxr3udx4xi" path="res://sprites/neptune.png" id="9_55ov7"]
+[ext_resource type="Texture2D" uid="uid://dwmqawwhmpeeq" path="res://sprites/pluto.png" id="10_iunau"]
+[ext_resource type="Texture2D" uid="uid://d23d1s1ukggx" path="res://sprites/saturn.png" id="11_xt3si"]
+[ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="12_mvqt3"]
+[ext_resource type="Texture2D" uid="uid://doh2x1rcq7vry" path="res://sprites/sun.png" id="13_01y4u"]
+[ext_resource type="Texture2D" uid="uid://n2smdxbyf14y" path="res://sprites/uranus.png" id="14_maymu"]
+[ext_resource type="Texture2D" uid="uid://clhd8qrow2py7" path="res://sprites/venus.png" id="15_4n14b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_phpny"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_53bqd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_k2u1d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a34v6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ejoe7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_jiwj8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ii84a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pd3ln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_55ov7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_iunau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_xt3si")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mvqt3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_01y4u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_maymu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_4n14b")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Anim Sprit" type="AnimatedSprite2D"]
+material = ExtResource("1_tnfrr")
+sprite_frames = SubResource("SpriteFrames_phpny")

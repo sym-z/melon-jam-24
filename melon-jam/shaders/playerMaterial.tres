@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dy7tcheftph1l"]
+
+[ext_resource type="Shader" path="res://shaders/crt-wiggle.gdshader" id="1_132d1"]
+
+[resource]
+shader = ExtResource("1_132d1")

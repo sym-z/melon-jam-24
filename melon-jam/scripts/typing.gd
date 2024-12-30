@@ -11,7 +11,7 @@ extends Node2D
 @export var wordContainer : HBoxContainer
 @export var timerLabel : RichTextLabel
 @export var timerOverlay: CenterContainer
-
+@export var background : Sprite2D
 ## Where the letters spawn in
 @export var westSpawnZone : CollisionShape2D
 @export var northSpawnZone : CollisionShape2D
@@ -21,6 +21,7 @@ extends Node2D
 ## Text shown to player
 @export var wordLabel : RichTextLabel
 
+@export var levelLabels : AnimatedSprite2D
 ## For instantiating and referencing
 var massScene = preload("res://scenes/mass.tscn")
 var playerScene = preload("res://scenes/player.tscn")
@@ -82,12 +83,12 @@ func _ready() -> void:
 	currentSpawn = westSpawnZone
 	newWord()
 	timer.start()
+	#pullUI()
 	
 func _process(delta):
 
 	if floor(timer.wait_time) > Globals.score:
 		Globals.score = floor(timer.wait_time)
-		print(Globals.score)
 	var timeText : String = str(floor(timer.time_left))
 	if !timer.is_stopped():
 		timeLabel.text = "\n" + Globals.centerString(timeText)
@@ -100,10 +101,8 @@ func newWord():
 	# MOVE TO NEXT PLANET
 	if wordNum > wordsPerGrow:
 		timer.set_wait_time(timer.wait_time + secondsPerLevel)
-		print("timer big bump")
 	else:
 		timer.set_wait_time(timer.wait_time + secondsPerWord)
-		print("timer small bump")
 	currentLetter = 0
 	currentWord = getRandomWord()
 	makeMassesFromWord(currentWord)
@@ -119,8 +118,8 @@ func newWord():
 			mass.adjustOffset()
 			if !gameWon:
 				mass.sprite.visible = true
-	print(currentWord)
-	
+				
+var scalarVec : Vector2 = Vector2.ZERO
 # For each letter in word, make a mass in the current spawn box.
 func makeMassesFromWord(word :String):
 	for letter in word:
@@ -130,6 +129,7 @@ func makeMassesFromWord(word :String):
 		var yVal = randi_range(startBox.y,endBox.y)
 		var xVal = randi_range(startBox.x,endBox.x)
 		var inst = massScene.instantiate();
+		inst.scale -= scalarVec
 		inst.startLoc = Vector2(xVal,yVal)
 		massParent.add_child(inst)
 		getNextSpawn()
@@ -174,6 +174,7 @@ func removeMass():
 
 var tween : Tween
 @export var tweenDur : float = 0.15
+var massScalar : float = 1.0
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_released():
 			# Prevent keyboard mashing
@@ -189,10 +190,13 @@ func _input(event: InputEvent) -> void:
 				else:
 					massParent.get_child(currentLetter-1).use_parent_material = false
 					massParent.get_child(currentLetter-1).material = hitMat
-					#print("WORD NUM" + str(wordNum))
-					#print("WPG: " + str(wordsPerGrow))
 					if wordNum >= wordsPerGrow:
 						currLevel += 1
+						if currLevel <= WordBank.LEVELS:
+							levelLabels.frame = currLevel-1
+							massScalar = clamp(currLevel - 5,0,INF)*0.1
+							scalarVec = Vector2(massScalar,massScalar)
+							# Add scalar Vec to all sprites
 					print("DONE!!")
 					if currLevel > WordBank.LEVELS:
 						gameWon = true
@@ -251,16 +255,17 @@ func pullUI():
 	tween.set_parallel()
 	throwToCenter(wordLabel)
 	
-	for ele in wordContainer.get_children():
-		throwToCenter(ele)
+	#for ele in wordContainer.get_children():
+		#throwToCenter(ele)
+	throwToCenter(wordContainer)
+	throwToCenter(levelLabels)
+	throwToCenter(background)
 	tween.connect("finished", win_scene)
 
 
 func throwToCenter(n : Node):
-	var xDelta = n.size.x / 2
-	var yDelta = n.size.y / 2
-	var deltaVector : Vector2 = Vector2(xDelta,yDelta)
-	tween.tween_property(n,"position",Globals.SCREEN_CENTER,tweenDur)
+	var tweenExtension := 3
+	tween.tween_property(n,"position",Globals.SCREEN_CENTER,tweenDur*tweenExtension)
 	tween.set_parallel()
-	tween.tween_property(n,"scale",Vector2.ZERO,tweenDur)
+	tween.tween_property(n,"scale",Vector2.ZERO,tweenDur*tweenExtension)
 # try new with global
