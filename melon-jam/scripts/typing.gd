@@ -3,6 +3,7 @@ extends Node2D
 ## Holds a reference to the player.
 @export var player : Node2D
 
+
 ## Holds all the instances of masses
 @export var massParent : Node2D
 ## Holds all UI
@@ -56,6 +57,7 @@ var sun : CircleShape2D = preload("res://shapes/sun.tres")
 var bh : CircleShape2D = preload("res://shapes/blackhole.tres")
 var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun,bh]
 
+var hitMat : ShaderMaterial = preload("res://shaders/hurt-material.tres")
 ## Tracks player progress
 @export var timer : Timer
 ## How many seconds are on the timer when the game starts
@@ -181,8 +183,12 @@ func _input(event: InputEvent) -> void:
 				wordLabel.text = Globals.centerString(currentWord.to_lower().erase(0,currentLetter))
 				if currentLetter < currentWord.length():
 					## TODO: COOL ANIMATION OR SOUND TO SHOW LETTER WAS CORRECT
+					massParent.get_child(currentLetter-1).use_parent_material = false
+					massParent.get_child(currentLetter-1).material = hitMat
 					pass
 				else:
+					massParent.get_child(currentLetter-1).use_parent_material = false
+					massParent.get_child(currentLetter-1).material = hitMat
 					#print("WORD NUM" + str(wordNum))
 					#print("WPG: " + str(wordsPerGrow))
 					if wordNum >= wordsPerGrow:
