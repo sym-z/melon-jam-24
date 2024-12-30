@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://ccj1o7iqgu43x"]
+[gd_scene load_steps=7 format=3 uid="uid://ccj1o7iqgu43x"]
 
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_5big4"]
 [ext_resource type="Script" path="res://scripts/game_won.gd" id="1_66h5x"]
-[ext_resource type="Texture2D" uid="uid://dgrycmyvihbbf" path="res://sprites/background.png" id="2_yis6h"]
+[ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_0yv4b"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="3_y3elu"]
+[ext_resource type="Texture2D" uid="uid://jvb2q7a1byue" path="res://sprites/continue.png" id="5_qd0wu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cwddn"]
 shader = ExtResource("1_5big4")
 
-[node name="Game Won" type="Control" node_paths=PackedStringArray("scoreText")]
+[node name="Game Won" type="Control" node_paths=PackedStringArray("scoreText", "mistakesText")]
 material = SubResource("ShaderMaterial_cwddn")
 use_parent_material = true
 layout_mode = 3
@@ -19,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_66h5x")
 scoreText = NodePath("VBoxContainer/Score Text")
+mistakesText = NodePath("VBoxContainer/Score Text")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 use_parent_material = true
@@ -28,7 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_yis6h")
+texture = ExtResource("3_0yv4b")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 use_parent_material = true
@@ -56,7 +58,7 @@ fit_content = true
 use_parent_material = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_y3elu")
-text = "continue?"
+icon = ExtResource("5_qd0wu")
 
 [node name="Score Text" type="RichTextLabel" parent="VBoxContainer"]
 use_parent_material = true
@@ -64,6 +66,14 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("3_y3elu")
 bbcode_enabled = true
 text = "[center]score:[/center]"
+fit_content = true
+
+[node name="Mistakes Text" type="RichTextLabel" parent="VBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_y3elu")
+bbcode_enabled = true
+text = "[center]typos: [/center]"
 fit_content = true
 
 [connection signal="button_up" from="VBoxContainer/Continue Button" to="." method="_on_continue_button_button_up"]

@@ -3,6 +3,7 @@ extends Node2D
 ## Holds a reference to the player.
 @export var player : Node2D
 
+
 ## Holds all the instances of masses
 @export var massParent : Node2D
 ## Holds all UI
@@ -56,6 +57,7 @@ var sun : CircleShape2D = preload("res://shapes/sun.tres")
 var bh : CircleShape2D = preload("res://shapes/blackhole.tres")
 var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun,bh]
 
+var hitMat : ShaderMaterial = preload("res://shaders/hurt-material.tres")
 ## Tracks player progress
 @export var timer : Timer
 ## How many seconds are on the timer when the game starts
@@ -73,6 +75,7 @@ var COLL_SHAPES = [sd,ast,moon,plut,merc,mars,vens,erth,nept,urns,sat,jup,sun,bh
 ## Keeps track of time during pause
 var backupTimeLabel : String
 
+var gameWon: bool = false
 func _ready() -> void:
 	timer.wait_time = startingSeconds
 	WordBank.loadFromFile(WordBank.textFile)
@@ -81,7 +84,7 @@ func _ready() -> void:
 	timer.start()
 	
 func _process(delta):
-	
+
 	if floor(timer.wait_time) > Globals.score:
 		Globals.score = floor(timer.wait_time)
 		print(Globals.score)
@@ -96,11 +99,6 @@ func newWord():
 	wordNum+=1
 	# MOVE TO NEXT PLANET
 	if wordNum > wordsPerGrow:
-		currLevel += 1
-		if currLevel > WordBank.LEVELS:
-			# GAME WON!
-			print("GAME WON!")
-			pullUI()
 		timer.set_wait_time(timer.wait_time + secondsPerLevel)
 		print("timer big bump")
 	else:
@@ -119,7 +117,8 @@ func newWord():
 			mass.sprite.frame = currLevel - 1
 			mass.shape.shape = COLL_SHAPES[currLevel-1]
 			mass.adjustOffset()
-			mass.sprite.visible = true
+			if !gameWon:
+				mass.sprite.visible = true
 	print(currentWord)
 	
 # For each letter in word, make a mass in the current spawn box.
@@ -163,12 +162,13 @@ func getRandomWord() -> String:
 	return wordSet[index]
 	
 func removeMass():
-	for child in massParent.get_children():
-		massParent.remove_child(child)
-	if currentLetter >= currentWord.length():
-		newWord()
-		# resume timer after new word is made, with time left remaining
-		timer.start(timer.time_left)
+	if !gameWon:
+		for child in massParent.get_children():
+			massParent.remove_child(child)
+		if currentLetter >= currentWord.length() and !gameWon:
+			newWord()
+			# resume timer after new word is made, with time left remaining
+			timer.start(timer.time_left)
 	
 
 
@@ -183,9 +183,21 @@ func _input(event: InputEvent) -> void:
 				wordLabel.text = Globals.centerString(currentWord.to_lower().erase(0,currentLetter))
 				if currentLetter < currentWord.length():
 					## TODO: COOL ANIMATION OR SOUND TO SHOW LETTER WAS CORRECT
+					massParent.get_child(currentLetter-1).use_parent_material = false
+					massParent.get_child(currentLetter-1).material = hitMat
 					pass
 				else:
+					massParent.get_child(currentLetter-1).use_parent_material = false
+					massParent.get_child(currentLetter-1).material = hitMat
+					#print("WORD NUM" + str(wordNum))
+					#print("WPG: " + str(wordsPerGrow))
+					if wordNum >= wordsPerGrow:
+						currLevel += 1
 					print("DONE!!")
+					if currLevel > WordBank.LEVELS:
+						gameWon = true
+						pullUI()
+					# TODO IF GAME IS NOT WON
 					# Pause timer for animation
 					timer.stop()
 					if(massParent.get_child_count()):
@@ -199,10 +211,11 @@ func _input(event: InputEvent) -> void:
 							tween.tween_property(childArr[i].sprite,"global_position",player.global_position-deltaVector,tweenDur)
 							tween.set_parallel();
 							tween.tween_property(childArr[i].shape,"global_position",player.global_position-deltaVector,tweenDur)
-							if i == childArr.size()-1:
+							if i == childArr.size()-1 and !gameWon:
 								tween.connect("finished", removeMass)
 			else:
 				print("FALSE")
+				Globals.mistakes += 1
 				# Make the penalty increase per level (0.5 sec per level) 
 				# (currLevel-1)/(1/secondsPerLevel)
 				# 1/0.5 = 2
@@ -250,3 +263,4 @@ func throwToCenter(n : Node):
 	tween.tween_property(n,"position",Globals.SCREEN_CENTER,tweenDur)
 	tween.set_parallel()
 	tween.tween_property(n,"scale",Vector2.ZERO,tweenDur)
+# try new with global

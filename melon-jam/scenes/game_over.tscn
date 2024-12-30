@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://cg7u6mqgqslcl"]
+[gd_scene load_steps=7 format=3 uid="uid://cg7u6mqgqslcl"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_7o88n"]
-[ext_resource type="Texture2D" uid="uid://dgrycmyvihbbf" path="res://sprites/background.png" id="1_o55fu"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_vr8la"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="2_5g7vs"]
+[ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_5d5a4"]
+[ext_resource type="Texture2D" uid="uid://jvb2q7a1byue" path="res://sprites/continue.png" id="5_t4uhj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6wgsw"]
 shader = ExtResource("1_vr8la")
 
-[node name="Game Over" type="Control" node_paths=PackedStringArray("scoreText")]
+[node name="Game Over" type="Control" node_paths=PackedStringArray("scoreText", "mistakesText")]
 material = SubResource("ShaderMaterial_6wgsw")
 use_parent_material = true
 layout_mode = 3
@@ -19,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7o88n")
 scoreText = NodePath("VBoxContainer/Score Text")
+mistakesText = NodePath("VBoxContainer/Mistakes Text")
 
 [node name="Background" type="TextureRect" parent="."]
 use_parent_material = true
@@ -28,7 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_o55fu")
+texture = ExtResource("3_5d5a4")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 use_parent_material = true
@@ -45,18 +47,32 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_5g7vs")
+bbcode_enabled = true
+text = "[center]you lost![/center]"
+fit_content = true
+
 [node name="Continue Button" type="Button" parent="VBoxContainer"]
-use_parent_material = true
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_5g7vs")
-text = "continue?"
+icon = ExtResource("5_t4uhj")
 
 [node name="Score Text" type="RichTextLabel" parent="VBoxContainer"]
 use_parent_material = true
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_5g7vs")
 bbcode_enabled = true
-text = "[center]score:[/center]"
+text = "[center]score: [/center]"
+fit_content = true
+
+[node name="Mistakes Text" type="RichTextLabel" parent="VBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_5g7vs")
+bbcode_enabled = true
+text = "[center]typos: [/center]"
 fit_content = true
 
 [connection signal="button_up" from="VBoxContainer/Continue Button" to="." method="_on_continue_button_button_up"]

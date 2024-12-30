@@ -1,9 +1,9 @@
 extends Control
 @export var scoreText : RichTextLabel
-
+@export var mistakesText : RichTextLabel
 func _ready():
-	print("SCORE IS: " + str(Globals.score))
-	scoreText.text = Globals.centerString("score: " + str(Globals.score))
+	scoreText.text = Globals.centerString("score: " + str(Globals.score)+"$")
+	mistakesText.text = Globals.centerString("typos: " + str(Globals.mistakes))
 
 func _on_continue_button_button_up():
 	call_deferred("next_scene")
