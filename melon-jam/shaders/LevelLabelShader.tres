@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b6aswbdwmdae"]
+
+[ext_resource type="Shader" path="res://shaders/label-wiggle.gdshader" id="1_4k8ko"]
+
+[resource]
+shader = ExtResource("1_4k8ko")

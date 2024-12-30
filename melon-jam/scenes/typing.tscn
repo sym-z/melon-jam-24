@@ -1,11 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://d26xtoi1mi5r7"]
+[gd_scene load_steps=30 format=3 uid="uid://d26xtoi1mi5r7"]
 
 [ext_resource type="Script" path="res://scripts/typing.gd" id="1_7fg4x"]
 [ext_resource type="Texture2D" uid="uid://djrloiynnrhvq" path="res://sprites/maintitlebackground.png" id="3_mrnyc"]
 [ext_resource type="PackedScene" uid="uid://do4ad7d6xmg37" path="res://scenes/player.tscn" id="4_mwn3l"]
+[ext_resource type="Shader" path="res://shaders/crt-wiggle.gdshader" id="5_0osbp"]
 [ext_resource type="Shader" path="res://shaders/crt.gdshader" id="6_f1k2r"]
 [ext_resource type="Texture2D" uid="uid://ysw0xiqt33ic" path="res://sprites/timer-remodel.png" id="6_ugwpl"]
 [ext_resource type="FontFile" uid="uid://bn2t1ab8msu7s" path="res://fonts/font.png" id="7_cp658"]
+[ext_resource type="Material" uid="uid://b6aswbdwmdae" path="res://shaders/LevelLabelShader.tres" id="8_ws780"]
+[ext_resource type="Texture2D" uid="uid://c8rubfsscgiia" path="res://sprites/level-labels.png" id="9_ea7f4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_at7qc"]
 shader = ExtResource("6_f1k2r")
@@ -21,6 +24,108 @@ size = Vector2(61, 125)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ea6j"]
 size = Vector2(218, 48)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3en3d"]
+shader = ExtResource("5_0osbp")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dding"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(0, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n36xe"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(60, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f4it0"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(120, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qojmx"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(180, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_thp1o"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(240, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxfc3"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(300, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_683ml"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(360, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvcpt"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(420, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwev3"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(480, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq2c4"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(540, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w44jd"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(600, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijur6"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(660, 0, 60, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msjf3"]
+atlas = ExtResource("9_ea7f4")
+region = Rect2(720, 0, 60, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fncjp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dding")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n36xe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f4it0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qojmx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thp1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxfc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_683ml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvcpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwev3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq2c4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w44jd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijur6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msjf3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Typing" type="Node2D" node_paths=PackedStringArray("player", "massParent", "uiParent", "wordContainer", "timerLabel", "timerOverlay", "westSpawnZone", "northSpawnZone", "eastSpawnZone", "southSpawnZone", "wordLabel", "timer", "timeLabel")]
 material = SubResource("ShaderMaterial_at7qc")
@@ -88,7 +193,7 @@ position = Vector2(117, 182)
 shape = SubResource("RectangleShape2D_8ea6j")
 
 [node name="Player" parent="." instance=ExtResource("4_mwn3l")]
-use_parent_material = true
+material = SubResource("ShaderMaterial_3en3d")
 position = Vector2(128, 120)
 
 [node name="UI" type="Control" parent="."]
@@ -148,5 +253,10 @@ visible_characters_behavior = 1
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Level Labels" type="AnimatedSprite2D" parent="."]
+material = ExtResource("8_ws780")
+position = Vector2(128, 231)
+sprite_frames = SubResource("SpriteFrames_fncjp")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

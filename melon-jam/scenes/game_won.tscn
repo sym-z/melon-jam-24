@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_66h5x")
 scoreText = NodePath("VBoxContainer/Score Text")
-mistakesText = NodePath("VBoxContainer/Score Text")
+mistakesText = NodePath("VBoxContainer/Mistakes Text")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 use_parent_material = true

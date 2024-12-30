@@ -1,7 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://do4ad7d6xmg37"]
+[gd_scene load_steps=21 format=3 uid="uid://do4ad7d6xmg37"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_r5oyr"]
+[ext_resource type="Material" uid="uid://dy7tcheftph1l" path="res://shaders/playerMaterial.tres" id="1_sbqdw"]
 [ext_resource type="Texture2D" uid="uid://ddsotgx3i26kn" path="res://sprites/stardust.png" id="1_thhjq"]
+[ext_resource type="Shader" path="res://shaders/crt-wiggle.gdshader" id="2_fku7x"]
 [ext_resource type="Texture2D" uid="uid://imeme21oiue5" path="res://sprites/asteroid.png" id="2_lipo3"]
 [ext_resource type="Texture2D" uid="uid://brew2swdmbtc0" path="res://sprites/moon.png" id="3_jx7ux"]
 [ext_resource type="Texture2D" uid="uid://dwmqawwhmpeeq" path="res://sprites/pluto.png" id="5_hwauj"]
@@ -18,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://ymfgy07evs7r" path="res://sprites/blackhole.png" id="15_x5y2a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_koinw"]
+shader = ExtResource("2_fku7x")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aqjtg"]
 animations = [{
@@ -70,6 +73,7 @@ animations = [{
 }]
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("sprite", "shape", "area")]
+material = ExtResource("1_sbqdw")
 script = ExtResource("1_r5oyr")
 sprite = NodePath("AnimatedSprite2D")
 shape = NodePath("Area2D/CollisionShape2D")
@@ -77,7 +81,7 @@ area = NodePath("Area2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_koinw")
-use_parent_material = true
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_aqjtg")
 frame = 1
 
